@@ -1,6 +1,6 @@
 
-const express = require('express');
-const cors = require('cors');
+import express from "express";
+import cors from "cors";
 const app = express();
 app.use(cors());
 
@@ -16,4 +16,6 @@ app.get('/', (req, res) => {
       interest: interest,
     });
 })
-app.listen(3000);
+app.listen(3000,()=>{
+  console.log('Starting server on port 3000');
+});
