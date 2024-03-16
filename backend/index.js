@@ -3,19 +3,30 @@ import cors from "cors";
 
 const app = express();
 
-// Allow all origins for demonstration purposes
+// Custom CORS middleware
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
+// Enable CORS for all routes
 app.use(cors());
 
-app.get('/', (req, res) => {
+// Your existing route handler
+app.get("/", (req, res) => {
   const principal = parseInt(req.query.principal);
   const rate = parseInt(req.query.rate);
   const time = parseInt(req.query.time);
   const interest = (principal + rate + time) / 100;
   const total = principal + interest;
-
-  // Set CORS headers explicitly
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
 
   res.send({
     total: total,
@@ -24,5 +35,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log('Starting server on port 3000');
+  console.log("Starting server on port 3000");
 });
+
