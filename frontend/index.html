@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        async function calculate(){
+            const p = document.getElementById("principal").value;
+            const r = document.getElementById("rate").value;
+            const t = document.getElementById("time").value;
+            try{
+                const response = await fetch ("http://localhost:3000/?principal="+p+"&rate="+r+"&time="+t);
+                
+                // const response = await fetch ("https://sum-server.100xdevs.com/interest?principal="+p+"&rate="+r+"&time="+t);
+                const data = await response.json();
+                console.log(data);
+                
+
+                
+                document.getElementById("final").innerHTML = "The total is "+data.total+" over "+t+" years";
+            }
+            catch(e){
+                console.log("Error: ",e);
+            }
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input  id="principal"  type="text" placeholder="principal"><br><br>
+    <input  id="rate"type="text"  placeholder="rate"><br><br>
+    <input  id="time" type="text"  placeholder="time"><br><br>
+    <button onclick="calculate()">click me</button>
+    <div id="final"></div>
+</body>
+</html>
